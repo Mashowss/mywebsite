@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcos Martinez | Photography</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+      CSS VARIABLES — change --accent to shift the whole color mood
+    ============================================================ */
+    :root {
+      --bg:        #0d0c0b;
+      --surface:   #161412;
+      --accent:    #c9a84c;
+      --text:      #e8e2d9;
+      --muted:     #7a7570;
+      --white:     #f5f1eb;
+      --nav-h:     72px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif:   'Cormorant Garamond', serif;
+      --font-ui:      'Jost', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-ui); font-weight: 300;
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    /* Film grain overlay */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    /* ============================================================
+      NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 64px); z-index: 100;
+      background: linear-gradient(to bottom, rgba(13,12,11,0.97), transparent);
+      border-bottom: 1px solid rgba(201,168,76,0.1); backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display); font-size: 1.45rem; letter-spacing: 0.1em;
+      color: var(--white); cursor: pointer; transition: color 0.3s; user-select: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-logo:hover { color: var(--accent); }
+
+    .nav-links { display: flex; gap: clamp(14px, 2.2vw, 34px); list-style: none; }
+    .nav-links a {
+      font-size: 0.63rem; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; cursor: pointer; transition: color 0.3s;
+      padding-bottom: 2px; border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--text); transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: rgba(13,12,11,0.97); z-index: 99;
+      flex-direction: column; align-items: center; justify-content: center; gap: 40px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-display); font-size: 2.8rem; letter-spacing: 0.1em;
+      color: var(--text); text-decoration: none; cursor: pointer; transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    @media (max-width: 720px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+    /* ============================================================
+      PAGE SYSTEM
+    ============================================================ */
+    .page { display: none; min-height: 100vh; padding-top: var(--nav-h); animation: fadeIn 0.55s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* ============================================================
+      SHARED COMPONENTS
+    ============================================================ */
+    .label {
+      font-size: 0.63rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .rule { width: 48px; height: 1px; background: var(--accent); margin-bottom: 24px; }
+
+    .big-h {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 9vw, 7.5rem);
+      line-height: 0.9; letter-spacing: 0.04em; color: var(--white);
+    }
+
+    .body-t {
+      font-family: var(--font-serif); font-size: clamp(1rem, 1.4vw, 1.1rem);
+      font-weight: 300; line-height: 1.85; color: var(--muted);
+    }
+
+    .btn {
+      display: inline-block; font-size: 0.63rem; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 13px 28px; cursor: pointer; text-decoration: none;
+      transition: all 0.3s; background: transparent;
+    }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; transition: color 0.3s; text-decoration: none;
+    }
+    .back-link::before { content: '←'; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ============================================================
+      HOME — HERO
+    ============================================================ */
+    .home-hero {
+      position: relative; height: calc(100vh - var(--nav-h));
+      display: flex; align-items: flex-end;
+      padding: clamp(32px, 6vw, 80px); overflow: hidden;
+    }
+    .home-hero-bg {
+      position: absolute; inset: 0;
+      /* EDIT: background: url('hero.jpg') center/cover no-repeat; */
+      background: linear-gradient(135deg, #1a1208 0%, #2a1f10 30%, #0d0c0b 70%);
+    }
+    .home-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,12,11,0.93) 0%, transparent 60%); }
+    .hero-frame { position: absolute; inset: 24px; border: 1px solid rgba(201,168,76,0.18); pointer-events: none; }
+    .hero-frame::before, .hero-frame::after { content: ''; position: absolute; background: var(--accent); }
+    .hero-frame::before { top: -1px; left: 32px; width: 48px; height: 1px; }
+    .hero-frame::after  { top: 32px; left: -1px; width: 1px; height: 48px; }
+
+    .hero-content { position: relative; z-index: 2; max-width: 960px; }
+    .hero-eyebrow { font-size: 0.63rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 13vw, 12rem); line-height: 0.85;
+      letter-spacing: 0.02em; color: var(--white); margin-bottom: 20px;
+    }
+    .hero-tagline { font-family: var(--font-serif); font-size: clamp(1rem, 1.8vw, 1.35rem); font-style: italic; color: var(--muted); margin-bottom: 40px; }
+    .hero-ctas { display: flex; gap: 20px; flex-wrap: wrap; }
+    .hero-scroll {
+      position: absolute; right: clamp(24px, 5vw, 64px); bottom: clamp(32px, 6vw, 80px); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl;
+    }
+    .hero-scroll::before {
+      content: ''; width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+
+    /* HOME — ABOUT */
+    .home-about { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.06); }
+    .about-text { padding: clamp(40px,8vw,100px) clamp(24px,5vw,80px); border-right: 1px solid rgba(255,255,255,0.06); }
+    .about-stats { padding: clamp(40px,8vw,100px) clamp(24px,5vw,80px); display: flex; flex-direction: column; justify-content: center; gap: 48px; }
+    .stat { display: flex; flex-direction: column; gap: 8px; }
+    .stat-n { font-family: var(--font-display); font-size: 3.5rem; color: var(--accent); letter-spacing: 0.05em; }
+    .stat-l { font-size: 0.63rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+
+    /* HOME — FEATURED */
+    .home-featured { padding: clamp(40px,8vw,100px) clamp(24px,5vw,80px); border-top: 1px solid rgba(255,255,255,0.06); }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 40px; }
+    .feat-card { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: var(--surface); }
+    .feat-card:nth-child(1) .ci { background: linear-gradient(160deg,#1e1508,#2e2010 50%,#0d0c0b); }
+    .feat-card:nth-child(2) .ci { background: linear-gradient(160deg,#0d1a1a,#0a2020 50%,#0d0c0b); }
+    .feat-card:nth-child(3) .ci { background: linear-gradient(160deg,#1a0d1a,#200a20 50%,#0d0c0b); }
+    .ci { position: absolute; inset: 0; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .feat-card:hover .ci { transform: scale(1.06); }
+    .co { position: absolute; inset: 0; background: linear-gradient(to top,rgba(13,12,11,0.85),transparent 50%); opacity: 0; transition: opacity 0.4s; }
+    .feat-card:hover .co { opacity: 1; }
+    .cl { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; transform: translateY(8px); opacity: 0; transition: all 0.4s; }
+    .feat-card:hover .cl { transform: none; opacity: 1; }
+    .cl-title { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.05em; color: var(--white); }
+    .cl-sub { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+
+    /* HOME — CONTACT */
+    .home-contact {
+      padding: clamp(60px,10vw,120px) clamp(24px,5vw,80px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px,6vw,80px); align-items: start;
+    }
+    .hc-info h2 { font-family: var(--font-display); font-size: clamp(2.5rem,6vw,5rem); color: var(--white); letter-spacing: 0.04em; line-height: 0.9; margin-bottom: 22px; }
+    .hc-info p { font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+    .hc-details { display: flex; flex-direction: column; gap: 14px; }
+    .hcd { display: flex; align-items: baseline; gap: 16px; }
+    .hcd-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); min-width: 72px; }
+    .hcd-val { font-family: var(--font-serif); font-size: 1rem; color: var(--text); text-decoration: none; transition: color 0.3s; }
+    .hcd-val:hover { color: var(--accent); }
+
+    .hc-form { display: flex; flex-direction: column; gap: 20px; }
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .cf-f { display: flex; flex-direction: column; gap: 7px; }
+    .cf-f label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
+    .cf-f input, .cf-f textarea {
+      background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.12);
+      color: var(--text); font-family: var(--font-serif); font-size: 1rem;
+      padding: 10px 0; outline: none; resize: none; transition: border-color 0.3s;
+    }
+    .cf-f input:focus, .cf-f textarea:focus { border-bottom-color: var(--accent); }
+    .cf-f input::placeholder, .cf-f textarea::placeholder { color: var(--muted); font-style: italic; }
+
+    @media (max-width: 720px) {
+      .home-about { grid-template-columns: 1fr; }
+      .about-text { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .feat-grid { grid-template-columns: 1fr 1fr; }
+      .feat-card:nth-child(3) { display: none; }
+      .home-contact { grid-template-columns: 1fr; }
+      .cf-row { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+      PHOTO PAGES — EDITORIAL SPREAD LAYOUT
+    ============================================================ */
+    .photo-page-hdr {
+      padding: clamp(48px,10vw,110px) clamp(24px,5vw,80px) clamp(32px,5vw,56px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+    }
+    .ba-access-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; transition: all 0.3s;
+      border: 1px solid rgba(255,255,255,0.1); padding: 12px 22px; white-space: nowrap;
+    }
+    .ba-access-btn::after { content: '→'; }
+    .ba-access-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* One spread = one photo + write-up */
+    .spread { border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+    .spread-img {
+      width: 100%; aspect-ratio: 16/9;
+      position: relative; overflow: hidden; background: var(--surface);
+    }
+    /* EDIT: Replace the .si-N classes with inline styles:
+       style="background: url('photo.jpg') center/cover no-repeat;"  */
+    .si-1 { background: linear-gradient(145deg,#1e1508,#2e2010); }
+    .si-2 { background: linear-gradient(145deg,#0c1a18,#0e2a26); }
+    .si-3 { background: linear-gradient(145deg,#1a0e10,#280c12); }
+    .si-4 { background: linear-gradient(145deg,#14140c,#22201a); }
+    .si-5 { background: linear-gradient(145deg,#0e0e1a,#141428); }
+    .si-6 { background: linear-gradient(145deg,#0a1410,#122018); }
+
+    .spread-img-bg { position: absolute; inset: 0; }
+    .spread-num {
+      position: absolute; top: 20px; left: 24px;
+      font-family: var(--font-display); font-size: 5rem;
+      color: rgba(201,168,76,0.12); line-height: 1; pointer-events: none;
+    }
+
+    .spread-writeup { display: grid; grid-template-columns: 280px 1fr; }
+
+    .sw-meta {
+      padding: clamp(24px,3vw,48px) clamp(20px,3vw,48px);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .sw-meta-title { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.04em; color: var(--white); line-height: 1; }
+    .sw-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid rgba(201,168,76,0.3); padding: 5px 11px;
+    }
+    .sw-meta-date { font-family: var(--font-serif); font-size: 0.9rem; font-style: italic; color: var(--muted); }
+
+    .sw-body { padding: clamp(24px,3vw,48px) clamp(20px,4vw,60px); }
+    .sw-body-title { font-family: var(--font-serif); font-size: clamp(1.1rem,2vw,1.5rem); font-weight: 400; font-style: italic; color: var(--white); margin-bottom: 14px; }
+    .sw-body-text { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--muted); }
+
+    @media (max-width: 720px) {
+      .spread-writeup { grid-template-columns: 1fr; }
+      .sw-meta { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    }
+
+    /* ============================================================
+      BEFORE & AFTER SUB-PAGES (hidden from nav)
+    ============================================================ */
+    .ba-page-hdr {
+      padding: clamp(32px,6vw,64px) clamp(24px,5vw,80px) 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ba-page-hdr h2 { font-family: var(--font-display); font-size: clamp(2rem,6vw,5rem); color: var(--white); letter-spacing: 0.04em; line-height: 0.9; margin: 16px 0 14px; }
+    .ba-page-hdr p { font-family: var(--font-serif); font-size: 1rem; font-style: italic; color: var(--muted); }
+
+    .ba-block { padding: clamp(36px,5vw,68px) clamp(24px,5vw,80px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .ba-block-title { font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; color: var(--muted); margin-bottom: 26px; letter-spacing: 0.04em; }
+
+    .ba-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .ba-side { position: relative; overflow: hidden; background: var(--surface); }
+    .ba-side-img { aspect-ratio: 4/3; }
+    /* EDIT: Replace inline gradient styles with your actual before/after photos:
+       style="background: url('before.jpg') center/cover no-repeat;" */
+
+    .ba-pill {
+      position: absolute; top: 14px; left: 14px;
+      font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; padding: 5px 13px;
+    }
+    .ba-pill.before { background: rgba(13,12,11,0.8); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
+    .ba-pill.after  { background: rgba(201,168,76,0.14); color: var(--accent); border: 1px solid rgba(201,168,76,0.35); }
+
+    .ba-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px; }
+    .ba-note { font-family: var(--font-serif); font-size: 0.97rem; font-style: italic; color: var(--muted); line-height: 1.75; }
+    .ba-note strong { display: block; font-family: var(--font-ui); font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; font-style: normal; color: var(--accent); margin-bottom: 6px; font-weight: 300; }
+
+    @media (max-width: 600px) {
+      .ba-pair { grid-template-columns: 1fr; }
+      .ba-notes { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+      EXTRAS — Simple grid, no write-ups
+    ============================================================ */
+    .extras-hdr {
+      padding: clamp(48px,10vw,110px) clamp(24px,5vw,80px) clamp(32px,5vw,56px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .extras-hdr p.sub { font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; color: var(--muted); margin-top: 16px; }
+
+    .extras-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; padding: 3px; }
+    .ep { position: relative; overflow: hidden; background: var(--surface); cursor: pointer; }
+    .ep:nth-child(1) { aspect-ratio: 4/5; }
+    .ep:nth-child(2) { aspect-ratio: 1; }
+    .ep:nth-child(3) { aspect-ratio: 4/5; }
+    .ep:nth-child(4) { grid-column: span 2; aspect-ratio: 16/9; }
+    .ep:nth-child(5) { aspect-ratio: 1; }
+    .ep:nth-child(6) { aspect-ratio: 4/5; }
+    .ep:nth-child(7) { aspect-ratio: 1; }
+    .ep:nth-child(8) { aspect-ratio: 4/5; }
+    .ep:nth-child(9) { grid-column: span 3; aspect-ratio: 21/8; }
+
+    .ep-inner { position: absolute; inset: 0; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .ep:hover .ep-inner { transform: scale(1.05); }
+
+    /* EDIT: Replace each gradient with your photo:
+       style="background: url('extra1.jpg') center/cover no-repeat;" */
+    .eg-1 { background: linear-gradient(145deg,#1e1508,#2e2010); }
+    .eg-2 { background: linear-gradient(145deg,#0c1a18,#0e2a26); }
+    .eg-3 { background: linear-gradient(145deg,#1a0e10,#280c12); }
+    .eg-4 { background: linear-gradient(145deg,#14140c,#22201a); }
+    .eg-5 { background: linear-gradient(145deg,#0e0e1a,#141428); }
+    .eg-6 { background: linear-gradient(145deg,#0a1410,#122018); }
+    .eg-7 { background: linear-gradient(145deg,#1c1008,#2c1a0c); }
+    .eg-8 { background: linear-gradient(145deg,#100c1a,#1c1228); }
+    .eg-9 { background: linear-gradient(145deg,#0a100e,#121c18); }
+
+    @media (max-width: 680px) {
+      .extras-grid { grid-template-columns: 1fr 1fr; }
+      .ep { aspect-ratio: 1 !important; grid-column: auto !important; }
+    }
+
+    /* ============================================================
+      FILM PAGE
+    ============================================================ */
+    .film-hero {
+      position: relative; height: 60vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .film-hero-bg {
+      position: absolute; inset: 0;
+      /* EDIT: background: url('dippler-still.jpg') center/cover no-repeat; */
+      background: linear-gradient(160deg,#100d08 0%,#1e1a10 40%,#080808 100%);
+    }
+    .film-hero-ov { position: absolute; inset: 0; background: rgba(13,12,11,0.55); }
+    .film-hero-c { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
+    .film-eyebrow { font-size: 0.6rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+    .film-title { font-family: var(--font-display); font-size: clamp(3.5rem,12vw,10rem); letter-spacing: 0.08em; color: var(--white); line-height: 0.9; }
+    .film-title .the { color: var(--accent); }
+    .film-sub { font-family: var(--font-serif); font-size: 1rem; font-style: italic; color: var(--muted); margin-top: 18px; }
+    .play-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 72px; height: 72px; border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 50%; margin-top: 32px; cursor: pointer; transition: all 0.3s;
+    }
+    .play-btn::after { content: ''; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 18px solid var(--accent); margin-left: 4px; }
+    .play-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--accent); transform: scale(1.08); }
+
+    .film-body { display: grid; grid-template-columns: 1fr 1fr; }
+    .film-syn { padding: clamp(40px,8vw,96px) clamp(24px,5vw,80px); border-right: 1px solid rgba(255,255,255,0.06); }
+    .film-creds { padding: clamp(40px,8vw,96px) clamp(24px,5vw,80px); }
+    .cr { display: flex; justify-content: space-between; align-items: baseline; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .cr-role { font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .cr-name { font-family: var(--font-serif); font-size: 1rem; font-style: italic; color: var(--text); text-align: right; }
+
+    .film-stills { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 2px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .still { aspect-ratio: 16/9; overflow: hidden; cursor: pointer; position: relative; }
+    .still-1 { background: linear-gradient(145deg,#1a1204,#2a1e08); }
+    .still-2 { background: linear-gradient(145deg,#041218,#081e28); }
+    .still-3 { background: linear-gradient(145deg,#180408,#280612); }
+    .still-4 { background: linear-gradient(145deg,#0c0c04,#1c1c08); }
+    .still::after { content: ''; position: absolute; inset: 0; background: var(--accent); opacity: 0; transition: opacity 0.4s; mix-blend-mode: color; }
+    .still:hover::after { opacity: 0.2; }
+
+    @media (max-width: 700px) {
+      .film-body { grid-template-columns: 1fr; }
+      .film-syn { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .film-stills { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ============================================================
+      FOOTER
+    ============================================================ */
+    footer {
+      padding: clamp(28px,4vw,52px) clamp(24px,5vw,80px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    .fl { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.1em; color: var(--muted); }
+    .fl span { color: var(--accent); }
+    .fc { font-size: 0.62rem; letter-spacing: 0.15em; color: var(--muted); }
+    .fs { display: flex; gap: 24px; }
+    .fs a { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .fs a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVIGATION ====== -->
+  <nav>
+    <div class="nav-logo" onclick="showPage('home')">Marcos <span>Martinez</span></div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')"   id="nav-home">Home</a></li>
+      <li><a onclick="showPage('photo1')" id="nav-photo1">Photo I</a></li>
+      <li><a onclick="showPage('photo2')" id="nav-photo2">Photo II</a></li>
+      <li><a onclick="showPage('extras')" id="nav-extras">Extras</a></li>
+      <li><a onclick="showPage('film')"   id="nav-film">The Dippler Film</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="mobile-menu" id="mob">
+    <a onclick="showPage('home');   toggleMenu()">Home</a>
+    <a onclick="showPage('photo1');toggleMenu()">Photo I</a>
+    <a onclick="showPage('photo2');toggleMenu()">Photo II</a>
+    <a onclick="showPage('extras');toggleMenu()">Extras</a>
+    <a onclick="showPage('film');  toggleMenu()">The Dippler Film</a>
+  </div>
+
+  <!-- ================================================================
+       PAGE: HOME
+  ================================================================ -->
+  <div id="page-home" class="page active">
+
+    <!-- Hero -->
+    <section class="home-hero">
+      <div class="home-hero-bg"></div><!-- EDIT: add background: url('hero.jpg') center/cover -->
+      <div class="home-hero-overlay"></div>
+      <div class="hero-frame"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Photography &amp; Film</p>
+        <h1 class="hero-name">Marcos<br/>Martinez</h1>
+        <!-- EDIT: Your tagline -->
+        <p class="hero-tagline">Capturing light, shadow &amp; the moments between moments</p>
+        <div class="hero-ctas">
+          <a class="btn" onclick="showPage('photo1')">View Portfolio</a>
+          <a class="btn" onclick="showPage('film')">The Dippler Film</a>
+        </div>
+      </div>
+      <div class="hero-scroll">Scroll</div>
+    </section>
+
+    <!-- About -->
+    <section class="home-about">
+      <div class="about-text">
+        <p class="label">About</p>
+        <div class="rule"></div>
+        <!-- EDIT: Your bio -->
+        <p class="body-t">
+          Based in [Your City], I work at the intersection of documentary truth and fine-art
+          vision. My work explores landscape, portraiture, and the hidden geometry of everyday life.
+          Every frame is an act of attention.
+        </p>
+        <br/><br/>
+        <p class="body-t">
+          Available for editorial commissions, fine-art prints, and collaborative film projects.
+          Reach out below — let's make something that lasts.
+        </p>
+        <br/><br/>
+        <a class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get In Touch</a>
+      </div>
+      <div class="about-stats">
+        <!-- EDIT: Your stats -->
+        <div class="stat"><span class="stat-n">12</span><span class="stat-l">Years of Practice</span></div>
+        <div class="stat"><span class="stat-n">340+</span><span class="stat-l">Projects Completed</span></div>
+        <div class="stat"><span class="stat-n">18</span><span class="stat-l">Countries Photographed</span></div>
+      </div>
+    </section>
+
+    <!-- Featured Work -->
+    <section class="home-featured">
+      <p class="label">Featured Work</p>
+      <div class="rule"></div>
+      <div class="feat-grid">
+        <div class="feat-card" onclick="showPage('photo1')">
+          <div class="ci"></div><!-- EDIT: add url() background -->
+          <div class="co"></div>
+          <div class="cl">
+            <div class="cl-title">Photo Series I</div><!-- EDIT -->
+            <div class="cl-sub">Landscape &amp; Light</div><!-- EDIT -->
+          </div>
+        </div>
+        <div class="feat-card" onclick="showPage('photo2')">
+          <div class="ci"></div>
+          <div class="co"></div>
+          <div class="cl">
+            <div class="cl-title">Photo Series II</div><!-- EDIT -->
+            <div class="cl-sub">Portraiture</div><!-- EDIT -->
+          </div>
+        </div>
+        <div class="feat-card" onclick="showPage('film')">
+          <div class="ci"></div>
+          <div class="co"></div>
+          <div class="cl">
+            <div class="cl-title">The Dippler Film</div>
+            <div class="cl-sub">Short Film · 2024</div><!-- EDIT year -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+      CONTACT — Home Page Bottom
+      EDIT: Replace email, handles, and location with your real details.
+      To receive form emails, use Formspree (free):
+        1. Sign up at formspree.io
+        2. Create a form → copy your form action URL
+        3. Wrap the fields in <form action="YOUR_URL" method="POST"> and change the button to <button type="submit">
+    ============================================================ -->
+    <section class="home-contact" id="contact">
+      <div class="hc-info">
+        <p class="label">Contact</p>
+        <div class="rule"></div>
+        <h2>Let's Work<br/>Together</h2>
+        <!-- EDIT: Your contact pitch -->
+        <p>Whether it's a commission, a collaboration, or just a conversation — I'd love to hear from you.</p>
+        <div class="hc-details">
+          <!-- EDIT: Your real contact details -->
+          <div class="hcd">
+            <span class="hcd-label">Email</span>
+            <a class="hcd-val" href="mailto:marcos@youremail.com">marcos@youremail.com</a>
+          </div>
+          <div class="hcd">
+            <span class="hcd-label">Based In</span>
+            <span class="hcd-val">[Your City, Country]</span><!-- EDIT -->
+          </div>
+          <div class="hcd">
+            <span class="hcd-label">Instagram</span>
+            <a class="hcd-val" href="https://instagram.com/yourhandle" target="_blank">@yourhandle</a><!-- EDIT -->
+          </div>
+          <div class="hcd">
+            <span class="hcd-label">Available</span>
+            <span class="hcd-val">Open for commissions</span><!-- EDIT -->
+          </div>
+        </div>
+      </div>
+
+      <div class="hc-form">
+        <!-- EDIT: To wire up real emails, wrap this in a <form> with Formspree action -->
+        <div class="cf-row">
+          <div class="cf-f"><label>First Name</label><input type="text" placeholder="First"/></div>
+          <div class="cf-f"><label>Last Name</label><input type="text" placeholder="Last"/></div>
+        </div>
+        <div class="cf-f"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="cf-f"><label>Subject</label><input type="text" placeholder="Commission / Collab / General"/></div>
+        <div class="cf-f"><label>Message</label><textarea rows="5" placeholder="Tell me about your project or idea..."></textarea></div>
+        <!-- EDIT: Replace onclick with real form submission once connected to Formspree -->
+        <a class="btn" onclick="alert('To receive messages: connect to Formspree at formspree.io')">Send Message →</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs">
+        <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><!-- EDIT -->
+        <a href="https://vsco.co/yourhandle" target="_blank">VSCO</a><!-- EDIT -->
+        <a href="mailto:marcos@youremail.com">Email</a><!-- EDIT -->
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       PAGE: PHOTO I
+       EDIT: Each .spread block is one photo + write-up.
+       To add more photos: duplicate a .spread block.
+       To swap in your image: change the .si-N class on .spread-img-bg
+         to: style="background: url('photo.jpg') center/cover no-repeat;"
+  ================================================================ -->
+  <div id="page-photo1" class="page">
+    <div class="photo-page-hdr">
+      <div>
+        <p class="label">Portfolio — Series One</p>
+        <div class="rule"></div>
+        <h2 class="big-h">Photo<br/>Series I</h2><!-- EDIT: series name -->
+      </div>
+      <!-- This button navigates to the hidden Before & After sub-page -->
+      <span class="ba-access-btn" onclick="showPage('photo1-ba')">View Before &amp; Afters</span>
+    </div>
+
+    <!-- ————— PHOTO 1 ————— -->
+    <div class="spread">
+      <div class="spread-img">
+        <!-- EDIT: Replace class si-1 with: style="background: url('photo.jpg') center/cover no-repeat;" -->
+        <div class="spread-img-bg si-1"></div>
+        <div class="spread-num">01</div>
+      </div>
+      <div class="spread-writeup">
+        <div class="sw-meta">
+          <div class="sw-meta-title">Photo Title One</div><!-- EDIT -->
+          <div class="sw-tags">
+            <span class="tag">Landscape</span><!-- EDIT -->
+            <span class="tag">Golden Hour</span><!-- EDIT -->
+            <span class="tag">Film</span><!-- EDIT: add/remove tags -->
+          </div>
+          <div class="sw-meta-date">January 2024 · Sony A7R V · 35mm</div><!-- EDIT -->
+        </div>
+        <div class="sw-body">
+          <div class="sw-body-title">Write your caption or title here</div><!-- EDIT -->
+          <div class="sw-body-text">
+            <!-- EDIT: Your write-up for photo 1 -->
+            This is where your story for this photo goes. Describe the moment, the location,
+            the light — or the feeling you were chasing. Talk about what drew you to the frame,
+            the technical choices you made, or simply let the viewer into the world of the shot.
+            This space is entirely yours — write as much or as little as feels right.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ————— PHOTO 2 ————— -->
+    <div class="spread">
+      <div class="spread-img">
+        <div class="spread-img-bg si-2"></div><!-- EDIT: swap with your image -->
+        <div class="spread-num">02</div>
+      </div>
+      <div class="spread-writeup">
+        <div class="sw-meta">
+          <div class="sw-meta-title">Photo Title Two</div><!-- EDIT -->
+          <div class="sw-tags">
+            <span class="tag">Portrait</span><!-- EDIT -->
+            <span class="tag">Natural Light</span><!-- EDIT -->
+          </div>
+          <div class="sw-meta-date">February 2024 · Fuji GFX · 85mm</div><!-- EDIT -->
+        </div>
+        <div class="sw-body">
+          <div class="sw-body-title">Write your caption or title here</div><!-- EDIT -->
+          <div class="sw-body-text">
+            <!-- EDIT: Write-up for photo 2 -->
+            Write your story for this photograph here. What was happening? Who was the subject?
+            What did the light feel like at that moment? Longer write-ups work beautifully here.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ————— PHOTO 3 ————— -->
+    <div class="spread">
+      <div class="spread-img">
+        <div class="spread-img-bg si-3"></div><!-- EDIT -->
+        <div class="spread-num">03</div>
+      </div>
+      <div class="spread-writeup">
+        <div class="sw-meta">
+          <div class="sw-meta-title">Photo Title Three</div><!-- EDIT -->
+          <div class="sw-tags">
+            <span class="tag">Street</span><!-- EDIT -->
+            <span class="tag">Urban</span><!-- EDIT -->
+          </div>
+          <div class="sw-meta-date">March 2024 · Contax 645 · 80mm</div><!-- EDIT -->
+        </div>
+        <div class="sw-body">
+          <div class="sw-body-title">Write your caption or title here</div><!-- EDIT -->
+          <div class="sw-body-text">
+            <!-- EDIT: Write-up for photo 3 -->
+            Your write-up for photo 3 goes here.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT: Duplicate a .spread block above to add more photos -->
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs"><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><a href="mailto:marcos@youremail.com">Email</a></div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       PAGE: PHOTO II — same structure as Photo I, edit independently
+  ================================================================ -->
+  <div id="page-photo2" class="page">
+    <div class="photo-page-hdr">
+      <div>
+        <p class="label">Portfolio — Series Two</p>
+        <div class="rule"></div>
+        <h2 class="big-h">Photo<br/>Series II</h2><!-- EDIT -->
+      </div>
+      <span class="ba-access-btn" onclick="showPage('photo2-ba')">View Before &amp; Afters</span>
+    </div>
+
+    <!-- ————— PHOTO 1 ————— -->
+    <div class="spread">
+      <div class="spread-img">
+        <div class="spread-img-bg si-4"></div><!-- EDIT -->
+        <div class="spread-num">01</div>
+      </div>
+      <div class="spread-writeup">
+        <div class="sw-meta">
+          <div class="sw-meta-title">Photo Title One</div><!-- EDIT -->
+          <div class="sw-tags">
+            <span class="tag">Portraiture</span><!-- EDIT -->
+            <span class="tag">Studio</span><!-- EDIT -->
+          </div>
+          <div class="sw-meta-date">April 2024 · Sony A7R V · 85mm</div><!-- EDIT -->
+        </div>
+        <div class="sw-body">
+          <div class="sw-body-title">Write your caption or title here</div><!-- EDIT -->
+          <div class="sw-body-text"><!-- EDIT -->Your write-up for Series II, photo 1 goes here. Describe the session, the subject, or the mood you were reaching for.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ————— PHOTO 2 ————— -->
+    <div class="spread">
+      <div class="spread-img">
+        <div class="spread-img-bg si-5"></div><!-- EDIT -->
+        <div class="spread-num">02</div>
+      </div>
+      <div class="spread-writeup">
+        <div class="sw-meta">
+          <div class="sw-meta-title">Photo Title Two</div><!-- EDIT -->
+          <div class="sw-tags">
+            <span class="tag">Location</span><!-- EDIT -->
+            <span class="tag">Candid</span><!-- EDIT -->
+          </div>
+          <div class="sw-meta-date">May 2024 · Mamiya RZ67 · 110mm</div><!-- EDIT -->
+        </div>
+        <div class="sw-body">
+          <div class="sw-body-title">Write your caption or title here</div><!-- EDIT -->
+          <div class="sw-body-text"><!-- EDIT -->Write your story here.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ————— PHOTO 3 ————— -->
+    <div class="spread">
+      <div class="spread-img">
+        <div class="spread-img-bg si-6"></div><!-- EDIT -->
+        <div class="spread-num">03</div>
+      </div>
+      <div class="spread-writeup">
+        <div class="sw-meta">
+          <div class="sw-meta-title">Photo Title Three</div><!-- EDIT -->
+          <div class="sw-tags"><span class="tag">Editorial</span><!-- EDIT --></div>
+          <div class="sw-meta-date">June 2024 · Sony A7R V · 50mm</div><!-- EDIT -->
+        </div>
+        <div class="sw-body">
+          <div class="sw-body-title">Write your caption or title here</div><!-- EDIT -->
+          <div class="sw-body-text"><!-- EDIT -->Write your story here.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT: Duplicate a .spread block to add more photos -->
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs"><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><a href="mailto:marcos@youremail.com">Email</a></div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       HIDDEN SUB-PAGE: BEFORE & AFTER — SERIES I
+       Not in the navigation. Accessed via the "View Before & Afters" button on Photo I.
+       EDIT: Each .ba-block is one before/after pair.
+       To add more: duplicate a .ba-block.
+       Replace the inline gradient styles with your actual images.
+  ================================================================ -->
+  <div id="page-photo1-ba" class="page">
+    <div class="ba-page-hdr">
+      <span class="back-link" onclick="showPage('photo1')">Back to Photo Series I</span>
+      <p class="label" style="margin-top:20px;">Behind the Edit</p>
+      <h2>Before &amp; After<br/>Series I</h2>
+      <p>The raw files versus the finished image — a look at the editing process.</p>
+    </div>
+
+    <!-- ————— COMPARISON 1 ————— -->
+    <div class="ba-block">
+      <div class="ba-block-title">01 — Photo Title One</div><!-- EDIT -->
+      <div class="ba-pair">
+        <div class="ba-side">
+          <!-- EDIT: background: url('before1.jpg') center/cover no-repeat; -->
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#1a1208,#2a1e0e);"></div>
+          <div class="ba-pill before">Before</div>
+        </div>
+        <div class="ba-side">
+          <!-- EDIT: background: url('after1.jpg') center/cover no-repeat; -->
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#2e2210,#3e3018);"></div>
+          <div class="ba-pill after">After</div>
+        </div>
+      </div>
+      <div class="ba-notes">
+        <!-- EDIT: Describe your before/after for photo 1 -->
+        <div class="ba-note"><strong>Before</strong>Straight out of camera. Flat picture profile, slightly underexposed in the shadows, cooler white balance than intended.</div>
+        <div class="ba-note"><strong>After</strong>Pulled highlights, lifted shadows selectively, warmed the midtones. Kodak Portra preset applied, then custom grain added in Lightroom.</div>
+      </div>
+    </div>
+
+    <!-- ————— COMPARISON 2 ————— -->
+    <div class="ba-block">
+      <div class="ba-block-title">02 — Photo Title Two</div><!-- EDIT -->
+      <div class="ba-pair">
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#0c1a18,#0e2020);"></div><!-- EDIT -->
+          <div class="ba-pill before">Before</div>
+        </div>
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#142e28,#1c3c32);"></div><!-- EDIT -->
+          <div class="ba-pill after">After</div>
+        </div>
+      </div>
+      <div class="ba-notes">
+        <div class="ba-note"><strong>Before</strong><!-- EDIT -->Describe the raw file here.</div>
+        <div class="ba-note"><strong>After</strong><!-- EDIT -->Describe your edit here.</div>
+      </div>
+    </div>
+
+    <!-- ————— COMPARISON 3 ————— -->
+    <div class="ba-block">
+      <div class="ba-block-title">03 — Photo Title Three</div><!-- EDIT -->
+      <div class="ba-pair">
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#1a0e10,#220a10);"></div><!-- EDIT -->
+          <div class="ba-pill before">Before</div>
+        </div>
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#2e1018,#3e1420);"></div><!-- EDIT -->
+          <div class="ba-pill after">After</div>
+        </div>
+      </div>
+      <div class="ba-notes">
+        <div class="ba-note"><strong>Before</strong><!-- EDIT -->Describe the raw file here.</div>
+        <div class="ba-note"><strong>After</strong><!-- EDIT -->Describe your edit here.</div>
+      </div>
+    </div>
+
+    <!-- EDIT: Duplicate a .ba-block to add more comparisons -->
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs"><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><a href="mailto:marcos@youremail.com">Email</a></div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       HIDDEN SUB-PAGE: BEFORE & AFTER — SERIES II
+       Same structure as Series I — edit independently
+  ================================================================ -->
+  <div id="page-photo2-ba" class="page">
+    <div class="ba-page-hdr">
+      <span class="back-link" onclick="showPage('photo2')">Back to Photo Series II</span>
+      <p class="label" style="margin-top:20px;">Behind the Edit</p>
+      <h2>Before &amp; After<br/>Series II</h2>
+      <p>The raw files versus the finished image — a look at the editing process.</p>
+    </div>
+
+    <!-- ————— COMPARISON 1 ————— -->
+    <div class="ba-block">
+      <div class="ba-block-title">01 — Photo Title One</div><!-- EDIT -->
+      <div class="ba-pair">
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#14140c,#1e1c10);"></div><!-- EDIT -->
+          <div class="ba-pill before">Before</div>
+        </div>
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#28261c,#36322a);"></div><!-- EDIT -->
+          <div class="ba-pill after">After</div>
+        </div>
+      </div>
+      <div class="ba-notes">
+        <div class="ba-note"><strong>Before</strong><!-- EDIT -->Describe the raw file here.</div>
+        <div class="ba-note"><strong>After</strong><!-- EDIT -->Describe your edit here.</div>
+      </div>
+    </div>
+
+    <!-- ————— COMPARISON 2 ————— -->
+    <div class="ba-block">
+      <div class="ba-block-title">02 — Photo Title Two</div><!-- EDIT -->
+      <div class="ba-pair">
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#0e0e1a,#12121e);"></div><!-- EDIT -->
+          <div class="ba-pill before">Before</div>
+        </div>
+        <div class="ba-side">
+          <div class="ba-side-img" style="background: linear-gradient(145deg,#1e1c2e,#2c2840);"></div><!-- EDIT -->
+          <div class="ba-pill after">After</div>
+        </div>
+      </div>
+      <div class="ba-notes">
+        <div class="ba-note"><strong>Before</strong><!-- EDIT -->Describe the raw file here.</div>
+        <div class="ba-note"><strong>After</strong><!-- EDIT -->Describe your edit here.</div>
+      </div>
+    </div>
+
+    <!-- EDIT: Duplicate a .ba-block to add more comparisons -->
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs"><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><a href="mailto:marcos@youremail.com">Email</a></div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       PAGE: EXTRAS — Photo grid, no write-ups or before/afters
+       EDIT: Replace each .eg-N class with your actual photo:
+         style="background: url('extra1.jpg') center/cover no-repeat;"
+       To add more: duplicate an .ep block (aspect ratios cycle automatically).
+  ================================================================ -->
+  <div id="page-extras" class="page">
+    <div class="extras-hdr">
+      <p class="label">Gallery</p>
+      <div class="rule"></div>
+      <h2 class="big-h">Extras</h2>
+      <!-- EDIT: Subtitle -->
+      <p class="sub">Additional work — shots that live outside the main series.</p>
+    </div>
+
+    <div class="extras-grid">
+      <div class="ep"><div class="ep-inner eg-1"></div></div><!-- EDIT: swap bg -->
+      <div class="ep"><div class="ep-inner eg-2"></div></div>
+      <div class="ep"><div class="ep-inner eg-3"></div></div>
+      <div class="ep"><div class="ep-inner eg-4"></div></div>
+      <div class="ep"><div class="ep-inner eg-5"></div></div>
+      <div class="ep"><div class="ep-inner eg-6"></div></div>
+      <div class="ep"><div class="ep-inner eg-7"></div></div>
+      <div class="ep"><div class="ep-inner eg-8"></div></div>
+      <div class="ep"><div class="ep-inner eg-9"></div></div>
+      <!-- EDIT: Add more .ep blocks here as needed -->
+    </div>
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs"><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><a href="mailto:marcos@youremail.com">Email</a></div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       PAGE: THE DIPPLER FILM
+  ================================================================ -->
+  <div id="page-film" class="page">
+    <section class="film-hero">
+      <div class="film-hero-bg"></div><!-- EDIT: add your film poster/still image -->
+      <div class="film-hero-ov"></div>
+      <div class="film-hero-c">
+        <p class="film-eyebrow">A Short Film · 2024</p><!-- EDIT year -->
+        <h1 class="film-title"><span class="the">The</span><br/>Dippler</h1>
+        <p class="film-sub"><!-- EDIT: your logline -->A film about [your logline here]</p>
+        <!-- EDIT: Replace YOUR_VIDEO_ID with your Vimeo or YouTube link -->
+        <div class="play-btn" onclick="window.open('https://vimeo.com/YOUR_VIDEO_ID','_blank')" title="Watch The Dippler"></div>
+      </div>
+    </section>
+
+    <div class="film-body">
+      <div class="film-syn">
+        <p class="label">Synopsis</p>
+        <div class="rule"></div>
+        <!-- EDIT: Your synopsis -->
+        <p class="body-t"><em>The Dippler</em> follows [description of your film]. Shot over [duration] across [locations], the film explores [central theme].</p>
+        <br/>
+        <p class="body-t"><!-- EDIT: Second paragraph -->[Further synopsis or intention behind the film.]</p>
+        <br/><br/>
+        <a class="btn" href="#" target="_blank">Watch Now</a><!-- EDIT: add your link -->
+      </div>
+      <div class="film-creds">
+        <p class="label">Credits</p>
+        <div class="rule"></div>
+        <!-- EDIT: Your credits -->
+        <div class="cr"><span class="cr-role">Director</span><span class="cr-name">Marcos Martinez</span></div>
+        <div class="cr"><span class="cr-role">Cinematographer</span><span class="cr-name">Name Here</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Producer</span><span class="cr-name">Name Here</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Editor</span><span class="cr-name">Name Here</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Sound Design</span><span class="cr-name">Name Here</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Score</span><span class="cr-name">Name Here</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Running Time</span><span class="cr-name">XX min</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Format</span><span class="cr-name">4K Digital</span></div><!-- EDIT -->
+        <div class="cr"><span class="cr-role">Festivals</span><span class="cr-name">Festival Name · Year</span></div><!-- EDIT -->
+      </div>
+    </div>
+
+    <!-- Film stills -->
+    <div class="film-stills">
+      <!-- EDIT: Replace gradient styles with url() backgrounds for your actual stills -->
+      <div class="still still-1"></div>
+      <div class="still still-2"></div>
+      <div class="still still-3"></div>
+      <div class="still still-4"></div>
+    </div>
+
+    <footer>
+      <div class="fl">Marcos <span>Martinez</span></div>
+      <div class="fc">© 2025 Marcos Martinez. All rights reserved.</div>
+      <div class="fs"><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a><a href="mailto:marcos@youremail.com">Email</a></div>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       JAVASCRIPT — routing only, no need to touch this
+  ================================================================ -->
+  <script>
+    const pages = ['home','photo1','photo2','extras','film','photo1-ba','photo2-ba'];
+
+    function showPage(id) {
+      pages.forEach(p => {
+        document.getElementById('page-' + p).classList.remove('active');
+        const n = document.getElementById('nav-' + p);
+        if (n) n.classList.remove('active');
+      });
+      const pg = document.getElementById('page-' + id);
+      if (pg) { pg.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      // Keep nav highlight on sub-pages
+      const navKey = id.startsWith('photo1') ? 'photo1' : id.startsWith('photo2') ? 'photo2' : id;
+      const navEl = document.getElementById('nav-' + navKey);
+      if (navEl) navEl.classList.add('active');
+      history.pushState(null, '', '#' + id);
+    }
+
+    window.addEventListener('popstate', () => {
+      const h = location.hash.replace('#','') || 'home';
+      if (pages.includes(h)) showPage(h);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const h = location.hash.replace('#','');
+      showPage(h && pages.includes(h) ? h : 'home');
+    });
+
+    function toggleMenu() {
+      document.getElementById('hamburger').classList.toggle('open');
+      document.getElementById('mob').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
