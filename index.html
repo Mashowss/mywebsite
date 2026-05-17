@@ -16,7 +16,7 @@
     :root {
       --bg:        #0d0c0b;
       --surface:   #161412;
-      --accent:    #c9a84c;
+      --accent:    #c084fc;
       --text:      #e8e2d9;
       --muted:     #7a7570;
       --white:     #f5f1eb;
@@ -50,7 +50,7 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 clamp(20px, 5vw, 64px); z-index: 100;
       background: linear-gradient(to bottom, rgba(13,12,11,0.97), transparent);
-      border-bottom: 1px solid rgba(201,168,76,0.1); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(192,132,252,0.1); backdrop-filter: blur(8px);
     }
 
     .nav-logo {
@@ -143,10 +143,10 @@
     .home-hero-bg {
       position: absolute; inset: 0;
       /* EDIT: background: url('hero.jpg') center/cover no-repeat; */
-      background: linear-gradient(135deg, #1a1208 0%, #2a1f10 30%, #0d0c0b 70%);
+      background: linear-gradient(135deg, #0d0b14 0%, #1a0f2e 30%, #120820 60%, #0d0c0b 100%);
     }
     .home-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,12,11,0.93) 0%, transparent 60%); }
-    .hero-frame { position: absolute; inset: 24px; border: 1px solid rgba(201,168,76,0.18); pointer-events: none; }
+    .hero-frame { position: absolute; inset: 24px; border: 1px solid rgba(192,132,252,0.18); pointer-events: none; }
     .hero-frame::before, .hero-frame::after { content: ''; position: absolute; background: var(--accent); }
     .hero-frame::before { top: -1px; left: 32px; width: 48px; height: 1px; }
     .hero-frame::after  { top: 32px; left: -1px; width: 1px; height: 48px; }
@@ -288,7 +288,7 @@
     .spread-num {
       position: absolute; bottom: 16px; right: 20px;
       font-family: var(--font-display); font-size: 4rem;
-      color: rgba(201,168,76,0.1); line-height: 1; pointer-events: none;
+      color: rgba(192,132,252,0.1); line-height: 1; pointer-events: none;
     }
 
     /* Write-up column */
@@ -307,7 +307,7 @@
     .sw-tags { display: flex; flex-wrap: wrap; gap: 7px; }
     .tag {
       font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--accent); border: 1px solid rgba(201,168,76,0.3); padding: 5px 11px;
+      color: var(--accent); border: 1px solid rgba(192,132,252,0.3); padding: 5px 11px;
     }
     .sw-meta-date {
       font-family: var(--font-serif); font-size: 0.9rem;
@@ -355,7 +355,7 @@
       font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; padding: 5px 13px;
     }
     .ba-pill.before { background: rgba(13,12,11,0.8); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
-    .ba-pill.after  { background: rgba(201,168,76,0.14); color: var(--accent); border: 1px solid rgba(201,168,76,0.35); }
+    .ba-pill.after  { background: rgba(192,132,252,0.14); color: var(--accent); border: 1px solid rgba(192,132,252,0.35); }
 
     .ba-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px; }
     .ba-note { font-family: var(--font-serif); font-size: 0.97rem; font-style: italic; color: var(--muted); line-height: 1.75; }
@@ -413,7 +413,7 @@
     .film-hero {
       position: relative; height: 60vh;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; border-bottom: 1px solid rgba(201,168,76,0.15);
+      overflow: hidden; border-bottom: 1px solid rgba(192,132,252,0.15);
     }
     .film-hero-bg {
       position: absolute; inset: 0;
@@ -428,11 +428,11 @@
     .film-sub { font-family: var(--font-serif); font-size: 1rem; font-style: italic; color: var(--muted); margin-top: 18px; }
     .play-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 72px; height: 72px; border: 1px solid rgba(201,168,76,0.4);
+      width: 72px; height: 72px; border: 1px solid rgba(192,132,252,0.4);
       border-radius: 50%; margin-top: 32px; cursor: pointer; transition: all 0.3s;
     }
     .play-btn::after { content: ''; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 18px solid var(--accent); margin-left: 4px; }
-    .play-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--accent); transform: scale(1.08); }
+    .play-btn:hover { background: rgba(192,132,252,0.1); border-color: var(--accent); transform: scale(1.08); }
 
     .film-body { display: grid; grid-template-columns: 1fr 1fr; }
     .film-syn { padding: clamp(40px,8vw,96px) clamp(24px,5vw,80px); border-right: 1px solid rgba(255,255,255,0.06); }
@@ -961,7 +961,7 @@
         </div>
         <div class="sw-divider"></div>
         <div>
-          <div class="sw-body-title">Just wait until the light come on.</div><!-- EDIT -->
+          <div class="sw-body-title">Just wait until the lights come on.</div><!-- EDIT -->
           <div class="sw-body-text" style="margin-top:12px;"><!-- EDIT: your write-up for photo 14 -->
             A silhouette picture needs some light behind it. I decided to have my friend, Daniel, pose for my silhouette picture. I had a beautiful purple color as the light shinning through. The pillars to the left and right in the picture were the cherry on top, adding some interest to the picture.
           </div>
@@ -1227,17 +1227,17 @@
       </div>
       <div class="spread-writeup">
         <div>
-          <div class="sw-meta-title">Photo Title 4</div><!-- EDIT -->
-          <div class="sw-meta-date" style="margin-top:10px;">2024 · Camera · Lens</div><!-- EDIT -->
+          <div class="sw-meta-title">Light within the void</div><!-- EDIT -->
+          <div class="sw-meta-date" style="margin-top:10px;">2026 · Canon</div><!-- EDIT -->
         </div>
         <div class="sw-tags">
-          <span class="tag">Tag</span><!-- EDIT: add/remove tags -->
+          <span class="tag">Macro</span><!-- EDIT: add/remove tags -->
         </div>
         <div class="sw-divider"></div>
         <div>
-          <div class="sw-body-title">Write your caption here</div><!-- EDIT -->
+          <div class="sw-body-title">What's got you glowing?</div><!-- EDIT -->
           <div class="sw-body-text" style="margin-top:12px;"><!-- EDIT: your write-up for photo 4 -->
-            Write your story for this photograph here. Describe the moment, the light, or the intention behind the frame.
+            I needed a picture quick. I found myself with a light, camera, and subject. Since I wanted to take a macro picture, I decided to photograph my subject's eye. The picture captures her eye, void of color. They're missing all color except for the light reflecting off her iris. Her face is lit up by a purple light. The expression in her eye and its lack of color, being just black, show the light has a meaning to it that represents a sense of hope to her. Like light at the end of a tunnel.
           </div>
         </div>
       </div>
@@ -1250,17 +1250,17 @@
       </div>
       <div class="spread-writeup">
         <div>
-          <div class="sw-meta-title">Photo Title 5</div><!-- EDIT -->
-          <div class="sw-meta-date" style="margin-top:10px;">2024 · Camera · Lens</div><!-- EDIT -->
+          <div class="sw-meta-title">A Sap of Autumn</div><!-- EDIT -->
+          <div class="sw-meta-date" style="margin-top:10px;">2026 · Canon</div><!-- EDIT -->
         </div>
         <div class="sw-tags">
-          <span class="tag">Tag</span><!-- EDIT: add/remove tags -->
+          <span class="tag">Macro</span><!-- EDIT: add/remove tags -->
         </div>
         <div class="sw-divider"></div>
         <div>
-          <div class="sw-body-title">Write your caption here</div><!-- EDIT -->
+          <div class="sw-body-title">How tiny.</div><!-- EDIT -->
           <div class="sw-body-text" style="margin-top:12px;"><!-- EDIT: your write-up for photo 5 -->
-            Write your story for this photograph here. Describe the moment, the light, or the intention behind the frame.
+            If it wasn't for this picture, I would've failed my photography class. Early in the year, I was slacking, not taking any pictures. Maybe my creativity had been lost since the year before. However, I desperately needed a picture. Since one of my favorite mediums is macro photography, I figured I'd shoot a macro photo.  I went out and searched for a good while, photographing tons of things, when I came across a tree with some sap coming out of its side. Macro is all about capturing the small things and making them appear as if they're sized up, however, this piece was extremely small. In the editing, I leaned into its more orange side, which eventually led to the name. One of my favorites I've taken in the macro space.
           </div>
         </div>
       </div>
@@ -1273,17 +1273,17 @@
       </div>
       <div class="spread-writeup">
         <div>
-          <div class="sw-meta-title">Photo Title 6</div><!-- EDIT -->
-          <div class="sw-meta-date" style="margin-top:10px;">2024 · Camera · Lens</div><!-- EDIT -->
+          <div class="sw-meta-title">A Fern in hidding</div><!-- EDIT -->
+          <div class="sw-meta-date" style="margin-top:10px;">2026 · Canon</div><!-- EDIT -->
         </div>
         <div class="sw-tags">
-          <span class="tag">Tag</span><!-- EDIT: add/remove tags -->
+          <span class="tag">Macro</span><!-- EDIT: add/remove tags -->
         </div>
         <div class="sw-divider"></div>
         <div>
-          <div class="sw-body-title">Write your caption here</div><!-- EDIT -->
+          <div class="sw-body-title">I found you.</div><!-- EDIT -->
           <div class="sw-body-text" style="margin-top:12px;"><!-- EDIT: your write-up for photo 6 -->
-            Write your story for this photograph here. Describe the moment, the light, or the intention behind the frame.
+            I wish I had more to say about this picture, but it was a quick take. I was looking for pictures to take in order to turn in for an assignment, and this is one of the ones that came out. I didn't do much editing, as I thought the final image came out well. Not my favorite, I'd say it's kind of basic, but not a bad picture by any means.
           </div>
         </div>
       </div>
@@ -1296,17 +1296,17 @@
       </div>
       <div class="spread-writeup">
         <div>
-          <div class="sw-meta-title">Photo Title 7</div><!-- EDIT -->
-          <div class="sw-meta-date" style="margin-top:10px;">2024 · Camera · Lens</div><!-- EDIT -->
+          <div class="sw-meta-title">Thorns on my side</div><!-- EDIT -->
+          <div class="sw-meta-date" style="margin-top:10px;">2026 · Canon</div><!-- EDIT -->
         </div>
         <div class="sw-tags">
-          <span class="tag">Tag</span><!-- EDIT: add/remove tags -->
+          <span class="tag">Macro</span><!-- EDIT: add/remove tags -->
         </div>
         <div class="sw-divider"></div>
         <div>
-          <div class="sw-body-title">Write your caption here</div><!-- EDIT -->
+          <div class="sw-body-title">Watch where you're going. These hurt.</div><!-- EDIT -->
           <div class="sw-body-text" style="margin-top:12px;"><!-- EDIT: your write-up for photo 7 -->
-            Write your story for this photograph here. Describe the moment, the light, or the intention behind the frame.
+            Walking through the forest is a treacherous journey. In the forest behind my school, these long strands of thorns hang everywhere, and they're hard to avoid. But I thought that maybe instead of avoiding them, I could photograph them. That's the image that came out, and I'm very proud of it.
           </div>
         </div>
       </div>
@@ -1319,17 +1319,17 @@
       </div>
       <div class="spread-writeup">
         <div>
-          <div class="sw-meta-title">Photo Title 8</div><!-- EDIT -->
-          <div class="sw-meta-date" style="margin-top:10px;">2024 · Camera · Lens</div><!-- EDIT -->
+          <div class="sw-meta-title">Greens Wherever</div><!-- EDIT -->
+          <div class="sw-meta-date" style="margin-top:10px;">2026 · Canon</div><!-- EDIT -->
         </div>
         <div class="sw-tags">
-          <span class="tag">Tag</span><!-- EDIT: add/remove tags -->
+          <span class="tag">Macro</span><!-- EDIT: add/remove tags -->
         </div>
         <div class="sw-divider"></div>
         <div>
-          <div class="sw-body-title">Write your caption here</div><!-- EDIT -->
+          <div class="sw-body-title">Stuff like this is everywhere.</div><!-- EDIT -->
           <div class="sw-body-text" style="margin-top:12px;"><!-- EDIT: your write-up for photo 8 -->
-            Write your story for this photograph here. Describe the moment, the light, or the intention behind the frame.
+            I really enjoyed the look of these plants I found. However, I just couldn't get the settings right in order to expose these macro photos well. The shutter speed has to be high since I'm shooting tiny things like this that may sway or move. I realized that I could just use the flash on my camera. Before, I had avoided it because I thought it made pictures look worse, but when it came to these small sizes it was perfect. I enjoy the picture I got out of it a lot, and it's the first one in the portfolio for Photo 2.
           </div>
         </div>
       </div>
@@ -1535,7 +1535,7 @@
     </div>
 
     <!-- Vimeo embed -->
-    <div style="padding: clamp(32px,5vw,64px) clamp(24px,5vw,80px); border-bottom: 1px solid rgba(201,168,76,0.15);">
+    <div style="padding: clamp(32px,5vw,64px) clamp(24px,5vw,80px); border-bottom: 1px solid rgba(192,132,252,0.15);">
       <div style="padding:56.25% 0 0 0; position:relative; background:#000; box-shadow: 0 0 60px rgba(0,0,0,0.6);">
         <iframe
           src="https://player.vimeo.com/video/1192937692?badge=0&autopause=0&player_id=0&app_id=58479"
