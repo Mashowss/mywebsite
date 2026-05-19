@@ -1523,11 +1523,25 @@
   <!-- ================================================================
        PAGE: THE DIPPLER FILM
   ================================================================ -->
+
+  <!-- Scoped red overrides — film page only, no other pages affected -->
+  <style>
+    #page-film { --accent: #e03030; }
+    #page-film .label          { color: #e03030; }
+    #page-film .rule           { background: #e03030; }
+    #page-film .cr-role        { color: #e03030; }
+    #page-film .tag            { color: #e03030; border-color: rgba(224,48,48,0.35); }
+    #page-film .btn            { color: #e03030; border-color: #e03030; }
+    #page-film .btn:hover      { background: #e03030; color: var(--bg); }
+    #page-film .fl span        { color: #e03030; }
+    #page-film .fs a:hover     { color: #e03030; }
+    #page-film .film-eyebrow   { color: #e03030; }
+  </style>
+
   <div id="page-film" class="page">
-    <!-- ── VIDEO PLAYER — The Dippler ── -->
     <!-- Film title header -->
     <div style="padding: clamp(48px,8vw,96px) clamp(24px,5vw,80px) 0; border-bottom: none;">
-      <p class="film-eyebrow" style="font-size:0.6rem;letter-spacing:0.5em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">A Short Film · 2026</p>
+      <p class="film-eyebrow" style="font-size:0.6rem;letter-spacing:0.5em;text-transform:uppercase;color:#e03030;margin-bottom:16px;">A Short Film · 2026</p>
       <h1 class="film-title" style="font-family:var(--font-display);font-size:clamp(3.5rem,12vw,10rem);letter-spacing:0.08em;color:var(--white);line-height:0.9;">
         <span style="color:var(--white);">The</span><br/><span style="color:#e03030;">Dippler</span>
       </h1>
@@ -1535,10 +1549,11 @@
     </div>
 
     <!-- Vimeo embed -->
-    <div style="padding: clamp(32px,5vw,64px) clamp(24px,5vw,80px); border-bottom: 1px solid rgba(192,132,252,0.15);">
+    <div style="padding: clamp(32px,5vw,64px) clamp(24px,5vw,80px); border-bottom: 1px solid rgba(224,48,48,0.2);">
       <div style="padding:56.25% 0 0 0; position:relative; background:#000; box-shadow: 0 0 60px rgba(0,0,0,0.6);">
         <iframe
-          src="https://player.vimeo.com/video/1192937692?badge=0&autopause=0&player_id=0&app_id=58479"
+          src="https://player.vimeo.com/video/1193408566?badge=0&autopause=0&player_id=0&app_id=58479"
+          width="1920" height="1080"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
